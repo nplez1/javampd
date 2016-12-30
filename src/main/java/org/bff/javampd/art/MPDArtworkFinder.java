@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -66,17 +67,15 @@ public class MPDArtworkFinder implements ArtworkFinder {
     public List<MPDArtwork> find(String path) {
         List<MPDArtwork> artworkList = new ArrayList<>();
 
-        try {
-            Files.newDirectoryStream(Paths.get(path), "**.{jpg,jpeg,png}")
-                    .forEach(file -> {
-                                file.getFileName();
-                                MPDArtwork artwork = new MPDArtwork();
-                                artwork.setName(file.getFileName().toString());
-                                artwork.setPath(file.toAbsolutePath().toString());
-                                artwork.setBytes(loadFile(file));
-                                artworkList.add(artwork);
-                            }
-                    );
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(path), "**.{jpg,jpeg,png}")) {
+            stream.forEach(file -> {
+                        file.getFileName();
+                        MPDArtwork artwork = new MPDArtwork(file.getFileName().toString(),
+                                file.toAbsolutePath().toString());
+                        artwork.setBytes(loadFile(file));
+                        artworkList.add(artwork);
+                    }
+            );
         } catch (IOException e) {
             LOGGER.error("Could not load art in {}", path, e);
             throw new MPDException("Could not read path: " + path, e);
@@ -85,7 +84,7 @@ public class MPDArtworkFinder implements ArtworkFinder {
         return artworkList;
     }
 
-    private byte[] loadFile(Path path) {
+    private static byte[] loadFile(Path path) {
         try {
             return Files.readAllBytes(path);
         } catch (IOException e) {
