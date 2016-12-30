@@ -14,6 +14,20 @@ public class MPDArtworkTest {
     }
 
     @Test
+    public void testGetName() {
+        String name = "name";
+        MPDArtwork artwork = new MPDArtwork(name, "path");
+        assertEquals(name, artwork.getName());
+    }
+
+    @Test
+    public void testGetPath() {
+        String path = "path";
+        MPDArtwork artwork = new MPDArtwork("name", path);
+        assertEquals(path, artwork.getPath());
+    }
+
+    @Test
     public void testEqualsSamePath() {
         MPDArtwork artwork1 = new MPDArtwork("name", "path");
         MPDArtwork artwork2 = new MPDArtwork("name", "path");
@@ -46,5 +60,17 @@ public class MPDArtworkTest {
         MPDArtwork artwork1 = new MPDArtwork("name", "path1");
         MPDArtwork artwork2 = new MPDArtwork("name", "path2");
         assertNotEquals(artwork1.hashCode(), artwork2.hashCode());
+    }
+
+    @Test
+    public void testGetBytes() {
+        byte[] bytes = {
+                0
+        };
+
+        MPDArtwork artwork = new MPDArtwork("name", "path");
+        artwork.setBytes(bytes);
+
+        assertEquals(bytes, artwork.getBytes());
     }
 }
