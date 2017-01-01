@@ -49,6 +49,20 @@ public class MPDArtworkTest {
     }
 
     @Test
+    public void testEqualsNullPath() {
+        MPDArtwork artwork1 = new MPDArtwork("name", null);
+        MPDArtwork artwork2 = new MPDArtwork("name", "path2");
+        assertNotEquals(artwork1, artwork2);
+    }
+
+    @Test
+    public void testEqualsNullPathParamater() {
+        MPDArtwork artwork1 = new MPDArtwork("name", "path1");
+        MPDArtwork artwork2 = new MPDArtwork("name", null);
+        assertNotEquals(artwork1, artwork2);
+    }
+
+    @Test
     public void testHashCodeSamePath() throws Exception {
         MPDArtwork artwork1 = new MPDArtwork("name", "path");
         MPDArtwork artwork2 = new MPDArtwork("name", "path");
@@ -60,6 +74,12 @@ public class MPDArtworkTest {
         MPDArtwork artwork1 = new MPDArtwork("name", "path1");
         MPDArtwork artwork2 = new MPDArtwork("name", "path2");
         assertNotEquals(artwork1.hashCode(), artwork2.hashCode());
+    }
+
+    @Test
+    public void testHashCodeNull() {
+        MPDArtwork artwork = new MPDArtwork("name", null);
+        assertEquals(0, artwork.hashCode());
     }
 
     @Test

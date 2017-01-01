@@ -38,7 +38,7 @@ public class MPDArtwork {
 
         MPDArtwork artwork = (MPDArtwork) o;
 
-        return path != null ? path.equals(artwork.path) : artwork.path == null;
+        return this.path != null ? this.path.equals(artwork.path) : artwork.path == null;
     }
 
     @Override
