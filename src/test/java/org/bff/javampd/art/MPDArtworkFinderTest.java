@@ -151,7 +151,15 @@ public class MPDArtworkFinderTest {
             assertNotNull(foundArtwork.getPath());
             assertNotNull(foundArtwork.getBytes());
         });
+    }
 
+    @Test(expected = MPDException.class)
+    public void findPathIOException() throws Exception {
+        File testFile = File.createTempFile("test", "jpg");
+
+        testFile.setReadable(false);
+
+        artworkFinder.find(testFile.getAbsolutePath());
     }
 
     @Test(expected = MPDException.class)
