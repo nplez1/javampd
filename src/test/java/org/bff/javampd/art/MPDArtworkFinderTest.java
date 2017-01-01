@@ -163,6 +163,18 @@ public class MPDArtworkFinderTest {
     }
 
     @Test(expected = MPDException.class)
+    public void findPathDirectoryIOException() throws Exception {
+        File tempDir = new File(System.getProperty("java.io.tmpdir") + "imageTemp");
+        tempDir.mkdir();
+
+        File testFile = File.createTempFile("test", ".jpg", tempDir);
+
+        tempDir.setReadable(false);
+
+        artworkFinder.find(testFile.getParent());
+    }
+
+    @Test(expected = MPDException.class)
     public void findBadPath() throws Exception {
         List<MPDArtwork> artworkList = artworkFinder.find("bad");
 

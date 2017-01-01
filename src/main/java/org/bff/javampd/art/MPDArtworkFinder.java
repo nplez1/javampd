@@ -68,20 +68,22 @@ public class MPDArtworkFinder implements ArtworkFinder {
         List<MPDArtwork> artworkList = new ArrayList<>();
 
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(path), "**.{jpg,jpeg,png}")) {
-            stream.forEach(file -> {
-                        file.getFileName();
-                        MPDArtwork artwork = new MPDArtwork(file.getFileName().toString(),
-                                file.toAbsolutePath().toString());
-                        artwork.setBytes(loadFile(file));
-                        artworkList.add(artwork);
-                    }
-            );
+            stream.forEach(file -> artworkList.add(loadArtwork(file)));
         } catch (IOException e) {
             LOGGER.error("Could not load art in {}", path, e);
             throw new MPDException("Could not read path: " + path, e);
         }
 
         return artworkList;
+    }
+
+    private static MPDArtwork loadArtwork(Path file) {
+        file.getFileName();
+        MPDArtwork artwork = new MPDArtwork(file.getFileName().toString(),
+                file.toAbsolutePath().toString());
+        artwork.setBytes(loadFile(file));
+
+        return artwork;
     }
 
     private static byte[] loadFile(Path path) {
