@@ -82,6 +82,25 @@ public class MPDArtworkFinderTest {
     }
 
     @Test
+    public void findArtistBadPath() throws Exception {
+        String[] artistImages = new String[]{
+                "artist200x200.png"
+        };
+
+        MPDArtist artist = new MPDArtist("artist");
+
+        String path1 = decode(new File(this.getClass().getResource("/images/" + artistImages[0]).getFile()).getParent());
+        List<MPDSong> songs = new ArrayList<>();
+        songs.add(new MPDSong(path1, "song1"));
+
+        when(songDatabase.findArtist(artist)).thenReturn(songs);
+
+        List<MPDArtwork> artworkList = artworkFinder.find(artist);
+
+        assertEquals(0, artworkList.size());
+    }
+
+    @Test
     public void findAlbum() throws Exception {
         String[] albumImages = new String[]{
                 "album200x200.jpg",
