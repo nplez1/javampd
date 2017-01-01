@@ -12,7 +12,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.File;
-import java.net.URL;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,8 +48,8 @@ public class MPDArtworkFinderTest {
 
         MPDArtist artist = new MPDArtist("artist");
 
-        String path1 = new File(this.getClass().getResource("/images/artist/" + artistImages[0]).getFile()).getParent();
-        String path2 = new File(this.getClass().getResource("/images/artist/" + artistImages[1]).getFile()).getParent();
+        String path1 = decode(new File(this.getClass().getResource("/images/artist/" + artistImages[0]).getFile()).getParent());
+        String path2 = decode(new File(this.getClass().getResource("/images/artist/" + artistImages[1]).getFile()).getParent());
         List<MPDSong> songs = new ArrayList<>();
         songs.add(new MPDSong(path1 + "/album/song1", "song1"));
         songs.add(new MPDSong(path2 + "/album/song2", "song2"));
@@ -89,7 +90,7 @@ public class MPDArtworkFinderTest {
 
         MPDAlbum album = new MPDAlbum("album", "artist");
 
-        String path1 = new File(this.getClass().getResource("/images/artist/album/" + albumImages[0]).getFile()).getParent();
+        String path1 = decode(new File(this.getClass().getResource("/images/artist/album/" + albumImages[0]).getFile()).getParent());
         List<MPDSong> songs = new ArrayList<>();
         songs.add(new MPDSong(path1 + "/song1", "song1"));
 
@@ -117,10 +118,8 @@ public class MPDArtworkFinderTest {
                 "artist200x200.png"
         };
 
-        URL url = this.getClass().getResource("/images/artist/" + images[0]);
-        File testImage = new File(url.getFile());
-
-        List<MPDArtwork> artworkList = artworkFinder.find(testImage.getParent());
+        String testImage = decode(new File(this.getClass().getResource("/images/artist/" + images[0]).getFile()).getParent());
+        List<MPDArtwork> artworkList = artworkFinder.find(testImage);
 
         assertEquals(images.length, artworkList.size());
 
@@ -143,4 +142,7 @@ public class MPDArtworkFinderTest {
         assertEquals(2, artworkList.size());
     }
 
+    private String decode(String encodedString) throws UnsupportedEncodingException {
+        return URLDecoder.decode(encodedString, "UTF-8");
+    }
 }
