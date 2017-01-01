@@ -155,11 +155,11 @@ public class MPDArtworkFinderTest {
 
     @Test(expected = MPDException.class)
     public void findPathIOException() throws Exception {
-        File testFile = File.createTempFile("test", "jpg");
+        File testFile = File.createTempFile("test", ".jpg");
 
         testFile.setReadable(false);
 
-        artworkFinder.find(testFile.getAbsolutePath());
+        artworkFinder.find(testFile.getParent());
     }
 
     @Test(expected = MPDException.class)
