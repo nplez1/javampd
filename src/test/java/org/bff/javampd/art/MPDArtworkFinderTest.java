@@ -173,7 +173,8 @@ public class MPDArtworkFinderTest {
         try {
             testFile = File.createTempFile("test", ".jpg", tempDir);
         } catch (IOException e) {
-            //dont care
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         tempDir.setReadable(false);
