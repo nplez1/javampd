@@ -171,7 +171,12 @@ public class MPDArtworkFinderTest {
 
         tempDir.setReadable(false);
 
-        artworkFinder.find(testFile.getParent());
+        try {
+            artworkFinder.find(testFile.getParent());
+        } finally {
+            tempDir.setReadable(true);
+            tempDir.delete();
+        }
     }
 
     @Test(expected = MPDException.class)
