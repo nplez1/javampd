@@ -63,6 +63,13 @@ public class MPDArtworkTest {
     }
 
     @Test
+    public void testEqualsBothNull() {
+        MPDArtwork artwork1 = new MPDArtwork("name", null);
+        MPDArtwork artwork2 = new MPDArtwork("name", null);
+        assertEquals(artwork1, artwork2);
+    }
+
+    @Test
     public void testHashCodeSamePath() throws Exception {
         MPDArtwork artwork1 = new MPDArtwork("name", "path");
         MPDArtwork artwork2 = new MPDArtwork("name", "path");
