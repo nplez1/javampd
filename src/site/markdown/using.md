@@ -24,8 +24,10 @@ care not to create new MPD objects each time you want to do something.
 Call close on the object when you are done.
 
 ##Art
-When running on the same server as MPD a list of artwork can be obtained for an artist or album.  A list of all images 
-in the directory can be returned if those files are readable by whatever user is running JavaMPD.  
+When running on the same server as MPD a list of artwork can be obtained for an artist or album.  If not running on the
+same server but hosting the images locally a path prefix can be passed to locate the images. 
+
+A list of all images in the directory can be returned if those files are readable by whatever user is running JavaMPD.  
 
 Ideally you should have some directory structure like
 /Artist/Album/song.flac

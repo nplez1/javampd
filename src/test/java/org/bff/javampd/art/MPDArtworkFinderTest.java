@@ -82,6 +82,52 @@ public class MPDArtworkFinderTest {
     }
 
     @Test
+    public void findArtistPrefix() throws Exception {
+        String[] artistImages = new String[]{
+                "artist200x200.jpg",
+                "artist200x200.png"
+        };
+
+        String[] albumImages = new String[]{
+                "album200x200.jpg",
+                "album200x200.png"
+        };
+
+        MPDArtist artist = new MPDArtist("artist");
+
+        String path = decode(new File(this.getClass().getResource("/images/artist/" + artistImages[0]).getFile()).getParent());
+        List<MPDSong> songs = new ArrayList<>();
+        songs.add(new MPDSong("/album/song1", "song1"));
+        songs.add(new MPDSong("/album/song2", "song2"));
+
+        when(songDatabase.findArtist(artist)).thenReturn(songs);
+
+        List<MPDArtwork> artworkList = artworkFinder.find(artist, path);
+
+        assertEquals(artistImages.length + albumImages.length, artworkList.size());
+
+        Arrays.asList(artistImages).forEach(image -> {
+            MPDArtwork foundArtwork = artworkList
+                    .stream()
+                    .filter(artwork -> image.equals(artwork.getName()))
+                    .findFirst()
+                    .orElse(null);
+            assertNotNull(foundArtwork.getPath());
+            assertNotNull(foundArtwork.getBytes());
+        });
+
+        Arrays.asList(albumImages).forEach(image -> {
+            MPDArtwork foundArtwork = artworkList
+                    .stream()
+                    .filter(artwork -> image.equals(artwork.getName()))
+                    .findFirst()
+                    .orElse(null);
+            assertNotNull(foundArtwork.getPath());
+            assertNotNull(foundArtwork.getBytes());
+        });
+    }
+
+    @Test
     public void findArtistBadPath() throws Exception {
         String[] artistImages = new String[]{
                 "artist200x200.png"
@@ -116,6 +162,36 @@ public class MPDArtworkFinderTest {
         when(songDatabase.findAlbum(album)).thenReturn(songs);
 
         List<MPDArtwork> artworkList = artworkFinder.find(album);
+
+        assertEquals(albumImages.length, artworkList.size());
+
+        Arrays.asList(albumImages).forEach(image -> {
+            MPDArtwork foundArtwork = artworkList
+                    .stream()
+                    .filter(artwork -> image.equals(artwork.getName()))
+                    .findFirst()
+                    .orElse(null);
+            assertNotNull(foundArtwork.getPath());
+            assertNotNull(foundArtwork.getBytes());
+        });
+    }
+
+    @Test
+    public void findAlbumPrefix() throws Exception {
+        String[] albumImages = new String[]{
+                "album200x200.jpg",
+                "album200x200.png"
+        };
+
+        MPDAlbum album = new MPDAlbum("album", "artist");
+
+        String path = decode(new File(this.getClass().getResource("/images/artist/album/" + albumImages[0]).getFile()).getParent());
+        List<MPDSong> songs = new ArrayList<>();
+        songs.add(new MPDSong("/song1", "song1"));
+
+        when(songDatabase.findAlbum(album)).thenReturn(songs);
+
+        List<MPDArtwork> artworkList = artworkFinder.find(album, path);
 
         assertEquals(albumImages.length, artworkList.size());
 

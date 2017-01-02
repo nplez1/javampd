@@ -31,11 +31,16 @@ public class MPDArtworkFinder implements ArtworkFinder {
 
     @Override
     public List<MPDArtwork> find(MPDAlbum album) {
+        return find(album, "");
+    }
+
+    @Override
+    public List<MPDArtwork> find(MPDAlbum album, String pathPrefix) {
         List<MPDArtwork> artworkList = new ArrayList<>();
         List<String> paths = new ArrayList<>();
 
         this.songDatabase.findAlbum(album)
-                .forEach(song -> paths.add(song.getFile().substring(0, song.getFile().lastIndexOf(File.separator))));
+                .forEach(song -> paths.add(pathPrefix + song.getFile().substring(0, song.getFile().lastIndexOf(File.separator))));
 
         paths.stream().distinct().forEach(path -> artworkList.addAll(find(path)));
 
@@ -44,12 +49,18 @@ public class MPDArtworkFinder implements ArtworkFinder {
 
     @Override
     public List<MPDArtwork> find(MPDArtist artist) {
+        return find(artist, "");
+    }
+
+    @Override
+    public List<MPDArtwork> find(MPDArtist artist, String pathPrefix) {
         List<MPDArtwork> artworkList = new ArrayList<>();
         List<String> paths = new ArrayList<>();
         List<String> albumPaths = new ArrayList<>();
 
         this.songDatabase.findArtist(artist)
-                .forEach(song -> albumPaths.add(song.getFile().substring(0, song.getFile().lastIndexOf(File.separator))));
+                .forEach(song -> albumPaths.add(pathPrefix + song.getFile().substring(0, song.getFile()
+                        .lastIndexOf(File.separator))));
 
         albumPaths.forEach(path -> {
             if (path.contains(File.separator + artist.getName() + File.separator)) {
