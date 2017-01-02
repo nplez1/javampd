@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -166,28 +165,14 @@ public class MPDArtworkFinderTest {
     @Test(expected = MPDException.class)
     public void findPathDirectoryIOException() throws Exception {
         String javaTempDir = System.getProperty("java.io.tmpdir");
-
         File tempDir = new File(javaTempDir + (javaTempDir.endsWith(File.separator) ? "" : File.separator) + "imageTemp");
-        System.out.println("tempDir is " + tempDir.getAbsolutePath());
         tempDir.mkdir();
-        tempDir.setWritable(true);
 
-        File testFile = null;
-        try {
-            testFile = File.createTempFile("test", ".jpg", tempDir);
-        } catch (IOException e) {
-            System.out.println(tempDir);
-            e.printStackTrace();
-        }
+        File testFile = File.createTempFile("test", ".jpg", tempDir);
 
         tempDir.setReadable(false);
+        artworkFinder.find(testFile.getParent());
 
-        try {
-            artworkFinder.find(testFile.getParent());
-        } finally {
-            tempDir.setReadable(true);
-            tempDir.delete();
-        }
     }
 
     @Test(expected = MPDException.class)
