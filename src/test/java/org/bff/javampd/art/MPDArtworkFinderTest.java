@@ -166,6 +166,7 @@ public class MPDArtworkFinderTest {
     @Test(expected = MPDException.class)
     public void findPathDirectoryIOException() throws Exception {
         File tempDir = new File(System.getProperty("java.io.tmpdir") + "imageTemp");
+        System.out.println("tempDir is " + tempDir.getAbsolutePath());
         tempDir.mkdir();
         tempDir.setWritable(true);
 
@@ -173,7 +174,7 @@ public class MPDArtworkFinderTest {
         try {
             testFile = File.createTempFile("test", ".jpg", tempDir);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println(tempDir);
             e.printStackTrace();
         }
 
