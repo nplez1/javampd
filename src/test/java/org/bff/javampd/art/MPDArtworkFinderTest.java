@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -168,7 +169,12 @@ public class MPDArtworkFinderTest {
         tempDir.mkdir();
         tempDir.setWritable(true);
 
-        File testFile = File.createTempFile("test", ".jpg", tempDir);
+        File testFile = null;
+        try {
+            testFile = File.createTempFile("test", ".jpg", tempDir);
+        } catch (IOException e) {
+            //dont care
+        }
 
         tempDir.setReadable(false);
 
