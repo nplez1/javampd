@@ -12,6 +12,7 @@ public interface TagLister {
 
         ALBUM("album"),
         ARTIST("artist"),
+        ALBUM_ARTIST("albumartist"),
         GENRE("genre"),
         DATE("date");
         private String type;

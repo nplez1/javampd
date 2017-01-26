@@ -10,6 +10,7 @@ import org.bff.javampd.MPDItem;
 public class MPDAlbum extends MPDItem {
 
     private String artistName;
+    private String albumArtistName;
     private String date;
 
     /**
@@ -53,6 +54,13 @@ public class MPDAlbum extends MPDItem {
         this.artistName = artistName;
     }
 
+    public String getAlbumArtistName() {
+        return albumArtistName;
+    }
+
+    public void setAlbumArtistName(String albumArtistName) {
+        this.albumArtistName = albumArtistName;
+    }
 
     /**
      * the date of the album

@@ -13,6 +13,7 @@ public class MPDSong extends MPDItem {
 
     private String title;
     private String artistName;
+    private String albumArtistName;
     private String albumName;
     private String file;
     private String genre;
@@ -71,6 +72,14 @@ public class MPDSong extends MPDItem {
      */
     public void setArtistName(String artistName) {
         this.artistName = artistName;
+    }
+
+    public String getAlbumArtistName() {
+        return albumArtistName;
+    }
+
+    public void setAlbumArtistName(String albumArtistName) {
+        this.albumArtistName = albumArtistName;
     }
 
     /**

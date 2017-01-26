@@ -1,6 +1,7 @@
 package org.bff.javampd.database;
 
 import org.bff.javampd.album.AlbumDatabase;
+import org.bff.javampd.albumartist.AlbumArtistDatabase;
 import org.bff.javampd.artist.ArtistDatabase;
 import org.bff.javampd.file.FileDatabase;
 import org.bff.javampd.genre.GenreDatabase;
@@ -15,6 +16,8 @@ import org.bff.javampd.year.DateDatabase;
  */
 public interface MusicDatabase {
     ArtistDatabase getArtistDatabase();
+
+    AlbumArtistDatabase getAlbumArtistDatabase();
 
     AlbumDatabase getAlbumDatabase();
 

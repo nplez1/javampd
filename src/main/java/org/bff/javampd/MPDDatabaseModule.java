@@ -3,6 +3,8 @@ package org.bff.javampd;
 import com.google.inject.AbstractModule;
 import org.bff.javampd.album.AlbumDatabase;
 import org.bff.javampd.album.MPDAlbumDatabase;
+import org.bff.javampd.albumartist.AlbumArtistDatabase;
+import org.bff.javampd.albumartist.MPDAlbumArtistDatabase;
 import org.bff.javampd.artist.ArtistDatabase;
 import org.bff.javampd.artist.MPDArtistDatabase;
 import org.bff.javampd.database.MPDMusicDatabase;
@@ -29,6 +31,7 @@ public class MPDDatabaseModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(ArtistDatabase.class).to(MPDArtistDatabase.class);
+        bind(AlbumArtistDatabase.class).to(MPDAlbumArtistDatabase.class);
         bind(AlbumDatabase.class).to(MPDAlbumDatabase.class);
         bind(SongDatabase.class).to(MPDSongDatabase.class);
         bind(GenreDatabase.class).to(MPDGenreDatabase.class);

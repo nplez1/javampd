@@ -3,6 +3,7 @@ package org.bff.javampd.database;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.bff.javampd.album.AlbumDatabase;
+import org.bff.javampd.albumartist.AlbumArtistDatabase;
 import org.bff.javampd.artist.ArtistDatabase;
 import org.bff.javampd.file.FileDatabase;
 import org.bff.javampd.genre.GenreDatabase;
@@ -13,6 +14,7 @@ import org.bff.javampd.year.DateDatabase;
 @Singleton
 public class MPDMusicDatabase implements MusicDatabase {
     private final ArtistDatabase artistDatabase;
+    private final AlbumArtistDatabase albumArtistDatabase;
     private final AlbumDatabase albumDatabase;
     private final GenreDatabase genreDatabase;
     private final PlaylistDatabase playlistDatabase;
@@ -22,6 +24,7 @@ public class MPDMusicDatabase implements MusicDatabase {
 
     @Inject
     public MPDMusicDatabase(ArtistDatabase artistDatabase,
+                            AlbumArtistDatabase albumArtistDatabase,
                             AlbumDatabase albumDatabase,
                             GenreDatabase genreDatabase,
                             PlaylistDatabase playlistDatabase,
@@ -29,6 +32,7 @@ public class MPDMusicDatabase implements MusicDatabase {
                             DateDatabase dateDatabase,
                             SongDatabase songDatabase) {
         this.artistDatabase = artistDatabase;
+        this.albumArtistDatabase = albumArtistDatabase;
         this.albumDatabase = albumDatabase;
         this.genreDatabase = genreDatabase;
         this.playlistDatabase = playlistDatabase;
@@ -40,6 +44,11 @@ public class MPDMusicDatabase implements MusicDatabase {
     @Override
     public ArtistDatabase getArtistDatabase() {
         return artistDatabase;
+    }
+
+    @Override
+    public AlbumArtistDatabase getAlbumArtistDatabase() {
+        return albumArtistDatabase;
     }
 
     @Override

@@ -5,6 +5,7 @@ import org.bff.javampd.processor.*;
 public enum SongProcessor {
     FILE(new FileTagProcessor()),
     ARTIST(new ArtistTagProcessor()),
+    ALBUM_ARTIST(new AlbumArtistTagProcessor()),
     ALBUM(new AlbumTagProcessor()),
     TRACK(new TrackTagProcessor()),
     TITLE(new TitleTagProcessor()),

@@ -9,8 +9,8 @@
 
     <property name="severity" value="error"/>
 
-    <!-- Whitespace checks http://checkstyle.sourceforge.net/config_whitespace.html -->
-    <module name="FileTabCharacter"/>
+    <!-- Whitespace checks http://checkstyle.sourceforge.net/config_whitespace.html
+    <module name="FileTabCharacter"/>-->
 
     <!-- Regex checks - http://checkstyle.sourceforge.net/config_regexp.html -->
     <module name="RegexpSingleline">
